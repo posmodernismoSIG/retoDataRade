@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Carrusel from "../Carrusel/Carrusel";
-
+import AddForm from "../AddForm/AddForm";
 function ModalCarrusel(props) {
   const { onHide, show, item } = props;
   const [listImages, setListImages] = useState([]);
   const [imgId, setImgId] = useState();
-
+  const [formShow, setformShow] = useState(false);
+  // console.log(item);
   useEffect(() => {
     if (item) {
       getData();
@@ -29,21 +30,37 @@ function ModalCarrusel(props) {
   };
 
   return (
-    <Modal show={show} size="lg" centered onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {props.item ? <h4>Fotos de {item.attributes.Descripcion}</h4> : <></>}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Carrusel id={imgId} end={listImages} />
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={onHide} variant="dark">
-          Cerrar
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <>
+      <Modal show={show} size="lg" centered onHide={onHide}>
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {props.item ? (
+              <h4>Fotos de {item.attributes.Descripcion}</h4>
+            ) : (
+              <></>
+            )}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Carrusel id={imgId} end={listImages} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={onHide} variant="dark">
+            Cerrar
+          </Button>
+          <Button
+            onClick={() => {
+              onHide();
+              setformShow(true);
+            }}
+            variant="dark"
+          >
+            Editar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <AddForm show={formShow} onHide={() => setformShow(false)} item={item} />
+    </>
   );
 }
 export default ModalCarrusel;

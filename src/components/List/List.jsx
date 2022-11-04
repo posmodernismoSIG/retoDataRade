@@ -8,9 +8,8 @@ function List() {
   const [selectedItem, setSelectedItem] = useState();
 
   useEffect(() => {
-    //primer paramtro del effect, la funcion que se va a ejecutar cuando cambie el tercer p.
     getData();
-  }, []); //tercer parametro tipo array que incluye lo que va a cambiar para el effect
+  }, []);
 
   const getData = () => {
     fetch(
